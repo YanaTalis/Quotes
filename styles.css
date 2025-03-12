@@ -58,3 +58,12 @@ body {
 .author {
   font-style: italic;
 }
+
+.heart-icon {
+  margin-left: 16px;
+  font-size: 40px;
+  /* color: #007bff; */
+  color: yellow;
+  vertical-align: middle;
+  cursor: pointer;
+}

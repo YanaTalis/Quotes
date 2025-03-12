@@ -1,4 +1,5 @@
-import quotes from './quotes.js'
+import quotes from './src/quotes.js'
+import { toggleFavoriteIcon, showFavoriteCard, hideFavoriteCard } from './src/favoritesHandler.js'
 
 const quoteElement = document.getElementById('quote')
 const quoteAuthorElement = document.getElementById('author')
@@ -16,7 +17,8 @@ function generateRandomQuote() {
   quoteElement.textContent = randomQuote.quote
   quoteAuthorElement.textContent = randomQuote.author
 
-  favoriteBtn.textContent = randomQuote.isFavorite ? 'Unfavorite' : 'Favorite'
+  toggleFavoriteIcon(randomQuote.isFavorite, favoriteBtn)
+
   favoriteBtn.style.display = 'inline-block'
 }
 
@@ -24,28 +26,16 @@ function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex]
   currentQuote.isFavorite = !currentQuote.isFavorite
 
-  favoriteBtn.textContent = currentQuote.isFavorite ? 'Unfavorite' : 'Favorite'
+  toggleFavoriteIcon(currentQuote.isFavorite, favoriteBtn)
 
   if (currentQuote.isFavorite) {
-    const favoriteCard = document.createElement('div')
-    favoriteCard.classList.add('favorite-card')
-    favoriteCard.innerHTML = `
-    <p>${currentQuote.quote}</p>
-    <p class="author">${currentQuote.author}</p>
-    `
-    favoritesContainer.appendChild(favoriteCard)
+    showFavoriteCard(currentQuote.quote, currentQuote.author, favoritesContainer)
   } else {
-    //rrmove fav card (if its unfavorite)
-    const favoriteCards = document.querySelectorAll('.favorite-card')
-    favoriteCards.forEach((card) => {
-      if (card.textContent.includes(currentQuote.quote)) {
-        card.remove()
-      }
-    })
+    hideFavoriteCard(currentQuote.quote)
   }
 }
 
 generateBtn.addEventListener('click', generateRandomQuote)
 favoriteBtn.addEventListener('click', toggleFavorite)
 
-// generateRandomQuote()
+generateRandomQuote()

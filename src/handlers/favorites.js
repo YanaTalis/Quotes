@@ -1,4 +1,4 @@
-import { currentQuote } from '../index.js'
+import { currentQuote } from './quote.js'
 
 const favoritesContainer = document.getElementById('favorites-container')
 const toggleBtn = document.getElementById('favorite-btn')
@@ -12,7 +12,6 @@ function toggleFavorite() {
 
   if (currentQuote.isFavorite) {
     showFavoriteCard(currentQuote.text, currentQuote.author, favoritesContainer)
-
   } else {
     hideFavoriteCard(currentQuote.text)
   }
@@ -55,11 +54,4 @@ function hideFavoriteCard(text) {
   })
 }
 
-export {
-  handleFavBtn,
-  toggleFavoriteIcon,
-  showToggleFavBtn,
-  showFavoriteCard,
-  hideFavoriteCard,
-}
-
+export { handleFavBtn }

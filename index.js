@@ -1,41 +1,32 @@
 import quotes from './src/quotes.js'
-import { toggleFavoriteIcon, showFavoriteCard, hideFavoriteCard } from './src/favoritesHandler.js'
+import { handleFavBtn } from './src/favoritesHandler.js'
+import { generateRandomInd } from './src/utils.js'
 
-const quoteElement = document.getElementById('quote')
-const quoteAuthorElement = document.getElementById('author')
 const generateBtn = document.getElementById('generate-btn')
 
-const favoriteBtn = document.getElementById('favorite-btn')
-const favoritesContainer = document.getElementById('favorites-container')
-
 let currentQuoteIndex
+let currentQuote = null
 
-function generateRandomQuote() {
-  currentQuoteIndex = Math.floor(Math.random() * quotes.length)
-  const randomQuote = quotes[currentQuoteIndex]
-
-  quoteElement.textContent = randomQuote.quote
-  quoteAuthorElement.textContent = randomQuote.author
-
-  toggleFavoriteIcon(randomQuote.isFavorite, favoriteBtn)
-
-  favoriteBtn.style.display = 'inline-block'
+function displayQuote({ text, author, isFavorite }) {
+  const quoteElement = document.getElementById('quote')
+  const quoteAuthorElement = document.getElementById('author')
+  quoteElement.textContent = text
+  quoteAuthorElement.textContent = author
+  handleFavBtn(isFavorite)
 }
 
-function toggleFavorite() {
-  const currentQuote = quotes[currentQuoteIndex]
-  currentQuote.isFavorite = !currentQuote.isFavorite
-
-  toggleFavoriteIcon(currentQuote.isFavorite, favoriteBtn)
-
-  if (currentQuote.isFavorite) {
-    showFavoriteCard(currentQuote.quote, currentQuote.author, favoritesContainer)
-  } else {
-    hideFavoriteCard(currentQuote.quote)
-  }
+function chooseRandomQuote(quotes) {
+  const randomIndex = generateRandomInd(quotes.length)
+  currentQuoteIndex = randomIndex
+  return quotes[randomIndex]
 }
 
-generateBtn.addEventListener('click', generateRandomQuote)
-favoriteBtn.addEventListener('click', toggleFavorite)
+function chooseAndDisplayQuote() {
+  const randomQuote = chooseRandomQuote(quotes)
+  currentQuote = randomQuote
+  displayQuote(randomQuote)
+}
 
-generateRandomQuote()
+generateBtn.addEventListener('click', chooseAndDisplayQuote)
+
+export { currentQuote }

@@ -26,10 +26,6 @@ body {
   background-color: #0458b1;
 }
 
-#favorite-btn {
-  display: none;
-}
-
 .quote {
   font-style: italic;
 }

@@ -43,7 +43,7 @@ function showFavoriteCard(text, author, container) {
 function hideFavoriteCard(text) {
   const favoriteCards = document.querySelectorAll('.favorite-card')
   favoriteCards.forEach((card) => {
-    if (card.textContent.includes(text)) {
+    if (card.textContent.includes(text)) {   //лучше по id проверять..
       card.remove()
     }
   })

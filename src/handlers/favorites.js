@@ -1,15 +1,11 @@
-import {toggleBtn} from '../../index.js'
+import { toggleBtn } from '../../index.js'
 
 function toggleFavorite(quote, btn, container) {
   quote.isFavorite = !quote.isFavorite // по ссылке!!
-  const { text, author, isFavorite } = quote
+  const { id, isFavorite } = quote
   toggleFavoriteIcon(isFavorite, btn)
 
-  if (isFavorite) {
-    showFavoriteCard(text, author, container)
-  } else {
-    hideFavoriteCard(text)
-  }
+  isFavorite ? showFavoriteCard(quote, container) : hideFavoriteCard(id)
 }
 
 function handleFavBtn(isFavorite) {
@@ -30,9 +26,11 @@ function hideBtn(btn) {
   btn.style.display = 'none'
 }
 
-function showFavoriteCard(text, author, container) {
+function showFavoriteCard(quote, container) {
+  const { id, text, author } = quote
   const favoriteCard = document.createElement('div')
   favoriteCard.classList.add('favorite-card')
+  favoriteCard.dataset.quoteId = id
   favoriteCard.innerHTML = `
       <p>${text}</p>
       <p class="author">${author}</p>
@@ -40,13 +38,11 @@ function showFavoriteCard(text, author, container) {
   container.appendChild(favoriteCard)
 }
 
-function hideFavoriteCard(text) {
-  const favoriteCards = document.querySelectorAll('.favorite-card')
-  favoriteCards.forEach((card) => {
-    if (card.textContent.includes(text)) {   //лучше по id проверять..
-      card.remove()
-    }
-  })
+function hideFavoriteCard(id) {
+  const card = document.querySelector(`.favorite-card[data-quote-id="${id}"]`)
+  if (card) {
+    card.remove()
+  }
 }
 
 export { handleFavBtn, toggleFavorite, hideBtn }

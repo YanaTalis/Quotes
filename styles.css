@@ -26,6 +26,16 @@ body {
   background-color: #0458b1;
 }
 
+.btn-delete {
+  background-color: transparent;
+  color: rgb(252, 43, 43);
+  border: 2px solid rgb(252, 43, 43);
+}
+
+.btn-delete:hover{
+  background-color: #e17979;
+}
+
 .quote {
   font-style: italic;
 }
@@ -42,13 +52,19 @@ body {
 }
 
 .favorite-card {
+  display: flex;
+  flex-direction: column;
   background-color: #05396f;
   padding: 10px 20px;
   margin: 10px;
-  border: 1px solid #0458b1;
+  border: 2px solid #0458b1;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 5, 0.1);
   width: 25%;
+}
+
+.favorite-card button {
+  margin-top: auto;
 }
 
 .author {

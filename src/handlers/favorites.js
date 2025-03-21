@@ -9,21 +9,21 @@ function toggleFavorite(quote, btn, container) {
 }
 
 function handleFavBtn(isFavorite) {
-  showFavBtn(toggleBtn)
-  toggleFavoriteIcon(isFavorite, toggleBtn)
+  showFavBtn()
+  toggleFavoriteIcon(isFavorite)
 }
 
-function toggleFavoriteIcon(isFavorite, element) {
-  element.classList.toggle('fa', isFavorite)
-  element.classList.toggle('far', !isFavorite)
+function toggleFavoriteIcon(isFavorite) {
+  toggleBtn.classList.toggle('fa', isFavorite)
+  toggleBtn.classList.toggle('far', !isFavorite)
 }
 
-function showFavBtn(btn) {
-  btn.style.display = 'inline-block'
+function showFavBtn() {
+  toggleBtn.style.display = 'inline-block'
 }
 
-function hideBtn(btn) {
-  btn.style.display = 'none'
+function hideBtn() {
+  toggleBtn.style.display = 'none'
 }
 
 function showFavoriteCard(quote, container) {
@@ -31,11 +31,19 @@ function showFavoriteCard(quote, container) {
   const favoriteCard = document.createElement('div')
   favoriteCard.classList.add('favorite-card')
   favoriteCard.dataset.quoteId = id
-  favoriteCard.innerHTML = `
+  favoriteCard.innerHTML = ` 
       <p>${text}</p>
       <p class="author">${author}</p>
+      <button class="btn btn-delete">Unfavorite</button>
       `
   container.appendChild(favoriteCard)
+
+  const removeBtn = favoriteCard.querySelector('.btn-delete')
+  removeBtn.addEventListener('click', () => {
+    quote.isFavorite = !quote.isFavorite
+    hideFavoriteCard(id)
+    toggleFavoriteIcon(quote.isFavorite)
+  })
 }
 
 function hideFavoriteCard(id) {

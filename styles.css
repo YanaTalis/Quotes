@@ -4,11 +4,12 @@ body {
   color: #faf7f7;
   margin: 0;
   padding: 0;
+  font-size: 18px;
 }
 
 .container {
   max-width: 800px;
-  margin: 50px auto;
+  margin: 30px auto;
   text-align: center;
 }
 
@@ -30,19 +31,29 @@ body {
   background-color: transparent;
   color: rgb(252, 43, 43);
   border: 2px solid rgb(252, 43, 43);
+  cursor: pointer;
+  min-width: 140px;
 }
 
-.btn-delete:hover{
-  background-color: #e17979;
+.btn-delete:hover {
+  background-color: #f79a9a;
 }
 
 .quote {
+  font-size: 1.2em;
+}
+
+.quote-text {
   font-style: italic;
 }
 
-.quote::after,
-.quote::before {
+.quote-text::after,
+.quote-text::before {
   content: '"';
+}
+
+.quote-author {
+  font-weight: bold;
 }
 
 .favorites-container {
@@ -67,14 +78,13 @@ body {
   margin-top: auto;
 }
 
-.author {
+.favorite-card-author {
   font-style: italic;
 }
 
 .heart-icon {
   margin-left: 16px;
   font-size: 40px;
-  /* color: #007bff; */
   color: yellow;
   vertical-align: middle;
   cursor: pointer;

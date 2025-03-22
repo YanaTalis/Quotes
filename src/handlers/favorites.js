@@ -5,7 +5,7 @@ function toggleFavorite(quote, btn, container) {
   const { id, isFavorite } = quote
   toggleFavoriteIcon(isFavorite, btn)
 
-  isFavorite ? showFavoriteCard(quote, container) : hideFavoriteCard(id)
+  isFavorite ? showFavoriteCard(quote, container) : removeFavCard(id)
 }
 
 function handleFavBtn(isFavorite) {
@@ -26,6 +26,17 @@ function hideBtn() {
   toggleBtn.style.display = 'none'
 }
 
+function removeFavQuote(quote) {
+  quote.isFavorite = false
+  removeFavCard(quote.id)
+
+  const currentQuote = document.querySelector('[data-current-quote-id]')
+  const currentQuoteId = currentQuote.dataset.currentQuoteId
+  if (quote.id === currentQuoteId) {
+    toggleFavoriteIcon(quote.isFavorite)
+  }
+}
+
 function showFavoriteCard(quote, container) {
   const { id, text, author } = quote
   const favoriteCard = document.createElement('div')
@@ -39,14 +50,10 @@ function showFavoriteCard(quote, container) {
   container.appendChild(favoriteCard)
 
   const removeBtn = favoriteCard.querySelector('.btn-delete')
-  removeBtn.addEventListener('click', () => {
-    quote.isFavorite = !quote.isFavorite
-    hideFavoriteCard(id)
-    toggleFavoriteIcon(quote.isFavorite)
-  })
+  removeBtn.addEventListener('click', () => removeFavQuote(quote))
 }
 
-function hideFavoriteCard(id) {
+function removeFavCard(id) {
   const card = document.querySelector(`.favorite-card[data-quote-id="${id}"]`)
   if (card) {
     card.remove()

@@ -7,10 +7,14 @@ function handleQuote(quotes, setCurrentQuote) {
   displayQuote(randomQuote)
 }
 
-function displayQuote({ text, author, isFavorite }) {
+function displayQuote(quote) {
+  const { id, text, author, isFavorite } = quote
   const quoteElement = document.getElementById('quote')
-  const quoteAuthorElement = document.getElementById('author')
-  quoteElement.textContent = text
+  const quoteTextElement = document.getElementById('quote-text')
+  const quoteAuthorElement = document.getElementById('quote-author')
+  //data-current-quote-id
+  quoteElement.dataset.currentQuoteId = id
+  quoteTextElement.textContent = text
   quoteAuthorElement.textContent = author
   handleFavBtn(isFavorite)
 }

@@ -1,5 +1,9 @@
 import quotes from './src/data/quotes.js'
-import { toggleFavorite, hideBtn } from './src/handlers/favorites.js'
+import {
+  toggleFavorite,
+  hideBtn,
+  showFavoriteCard,
+} from './src/handlers/favorites.js'
 import {
   handleQuote,
   displayQuote,
@@ -10,24 +14,32 @@ import {
   localStorageGetItem,
 } from './src/utils/localStorage.js'
 
+const CURRENT_QUOTE_KEY = 'currentQuote'
+const FAVORITE_QUOTES_KEY = 'favoriteQuotes'
+
 let currentQuote = null
+const favoriteQuotes = []
 
-function setCurrentQuote(quote) {
-  currentQuote = quote
-  localStorageSetItem('currentQuote', quote)
-}
-
-function init() {
-  const currentQuoteLS = localStorageGetItem('currentQuote')
-  if (currentQuoteLS) {
-    displayQuote(currentQuoteLS)
-    const quote = findQuoteById(quotes, currentQuoteLS.id)
-    quote.isFavorite = currentQuoteLS.isFavorite
-    currentQuote = quote
+function setCurrentQuote(quote, shouldToggleIsFavorite = false) {
+  if (shouldToggleIsFavorite) {
+    quote.isFavorite = !quote.isFavorite
+    //change LS favoriteQuotes
+    if (quote.isFavorite) {
+      favoriteQuotes.push({ ...quote })
+    } else {
+      const index = favoriteQuotes.findIndex(
+        (favoriteQuote) => favoriteQuote.id === quote.id
+      )
+      if (index !== -1) {
+        favoriteQuotes.splice(index, 1)
+      }
+    }
+    localStorageSetItem(FAVORITE_QUOTES_KEY, favoriteQuotes)
   }
-}
 
-window.addEventListener('load', init)
+  currentQuote = quote
+  localStorageSetItem(CURRENT_QUOTE_KEY, currentQuote)
+}
 
 const favoritesContainer = document.getElementById('favorites-container')
 const toggleBtn = document.getElementById('favorite-btn')
@@ -40,7 +52,25 @@ toggleBtn.addEventListener('click', () =>
 
 const generateBtn = document.getElementById('generate-btn')
 generateBtn.addEventListener('click', () =>
-  handleQuote(quotes, setCurrentQuote)
+  handleQuote(quotes, favoriteQuotes, setCurrentQuote)
 )
+
+function init() {
+  const currentQuoteLS = localStorageGetItem(CURRENT_QUOTE_KEY)
+  if (currentQuoteLS) {
+    displayQuote(currentQuoteLS)
+    const quote = findQuoteById(quotes, currentQuoteLS.id)
+    quote.isFavorite = currentQuoteLS.isFavorite
+    currentQuote = quote
+  }
+
+  const favoriteQuotesLS = localStorageGetItem(FAVORITE_QUOTES_KEY)
+  favoriteQuotesLS.forEach((quote) => {
+    showFavoriteCard(quote, favoritesContainer)
+    favoriteQuotes.push(quote)
+  })
+}
+
+window.addEventListener('load', init)
 
 export { toggleBtn }

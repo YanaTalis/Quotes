@@ -1,8 +1,10 @@
 import { generateRandomInd } from '../utils/math.js'
 import { handleFavBtn } from './favorites.js'
 
-function handleQuote(quotes, setCurrentQuote) {
+function handleQuote(quotes, favoriteQuotes,setCurrentQuote) {
   const randomQuote = chooseRandomQuote(quotes)
+  // check if id of randomQuote is among ids of the fav quotes
+
   setCurrentQuote(randomQuote)
   displayQuote(randomQuote)
 }

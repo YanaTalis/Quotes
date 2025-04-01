@@ -1,8 +1,8 @@
 import { toggleBtn } from '../../index.js'
 
 function toggleFavorite(quote, setCurrentQuote, btn, container) {
-  quote.isFavorite = !quote.isFavorite // по ссылке!!
-  setCurrentQuote(quote)
+  const shouldToggleIsFavorite = true
+  setCurrentQuote(quote, shouldToggleIsFavorite)
   const { id, isFavorite } = quote
   toggleFavoriteIcon(isFavorite, btn)
 
@@ -61,4 +61,4 @@ function removeFavCard(id) {
   }
 }
 
-export { handleFavBtn, toggleFavorite, hideBtn }
+export { handleFavBtn, toggleFavorite, hideBtn, showFavoriteCard }

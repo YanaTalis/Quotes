@@ -36,7 +36,6 @@ function setCurrentQuote(quote, shouldToggleIsFavorite = false) {
     }
     localStorageSetItem(FAVORITE_QUOTES_KEY, favoriteQuotes)
   }
-
   currentQuote = quote
   localStorageSetItem(CURRENT_QUOTE_KEY, currentQuote)
 }
@@ -65,10 +64,12 @@ function init() {
   }
 
   const favoriteQuotesLS = localStorageGetItem(FAVORITE_QUOTES_KEY)
-  favoriteQuotesLS.forEach((quote) => {
-    showFavoriteCard(quote, favoritesContainer)
-    favoriteQuotes.push(quote)
-  })
+  if (favoriteQuotesLS) {
+    favoriteQuotesLS.forEach((quote) => {
+      favoriteQuotes.push(quote)
+      showFavoriteCard(quote, setCurrentQuote, favoritesContainer)
+    })
+  }
 }
 
 window.addEventListener('load', init)

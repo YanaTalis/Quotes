@@ -3,7 +3,10 @@ import { handleFavBtn } from './favorites.js'
 
 function handleQuote(quotes, favoriteQuotes,setCurrentQuote) {
   const randomQuote = chooseRandomQuote(quotes)
-  // check if id of randomQuote is among ids of the fav quotes
+  
+  if(favoriteQuotes.find((quote) => quote.id === randomQuote.id)) {
+    randomQuote.isFavorite = true
+  }
 
   setCurrentQuote(randomQuote)
   displayQuote(randomQuote)
